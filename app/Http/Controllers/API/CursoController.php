@@ -72,7 +72,7 @@ class CursoController extends BaseController
         $curso = Curso::find($id);
 
         if (is_null($curso)) {
-            return $this->sendError('Product not found.');
+            return $this->sendError('Curso not found.');
         }
 
         return $this->sendResponse(new CursoResource($curso), 'Curso retrieved successfully.');
@@ -96,10 +96,17 @@ class CursoController extends BaseController
      * @param  \App\Models\Curso  $curso
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Curso $curso)
+    public function update(Request $request,Curso $curso )
+    //public function update(Request $request, $id)
+
     {
         //
         $input = $request->all();
+
+
+       //$curso= Curso::findOrFail($id);
+       // se implemento
+
 
         $validator = Validator::make($input, [
             'nombre' => 'required',
@@ -110,8 +117,8 @@ class CursoController extends BaseController
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $curso->name = $input['nombre'];
-        $curso->detail = $input['detalle'];
+        $curso->nombre = $input['nombre'];
+        $curso->detalle = $input['detalle'];
         $curso->save();
 
         return $this->sendResponse(new CursoResource($curso), 'Curso updated successfully.');

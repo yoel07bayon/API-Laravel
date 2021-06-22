@@ -18,10 +18,9 @@ class AnioLectivoController extends BaseController
     public function index()
     {
         //
-        $anio = AnioLectivo::all();
+        $anios = AnioLectivo::all();
 
-        return $this->sendResponse(AnioLectivoResource::collection($anio), 'Anio retrieved successfully.');
-
+        return $this->sendResponse(AnioLectivoResource::collection($anios), 'Anios retrieved successfully.');
 
     }
 
@@ -44,17 +43,38 @@ class AnioLectivoController extends BaseController
     public function store(Request $request)
     {
         //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'estado' => 'required',
+            'nombre' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $anio = AnioLectivo::create($input);
+
+        return $this->sendResponse(new AnioLectivoResource($anio), 'Anio created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\AnioLectivo  $anioLectivo
+     * @param  \App\Models\AnioLectivo  $anio
      * @return \Illuminate\Http\Response
      */
-    public function show(AnioLectivo $anioLectivo)
+    public function show($id)
     {
         //
+        $anio = AnioLectivo::find($id);
+
+        if (is_null($anio)) {
+            return $this->sendError('Anio not found.');
+        }
+
+        return $this->sendResponse(new AnioLectivoResource($anio), 'Anio retrieved successfully.');
     }
 
     /**
@@ -75,19 +95,38 @@ class AnioLectivoController extends BaseController
      * @param  \App\Models\AnioLectivo  $anioLectivo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, AnioLectivo $anioLectivo)
+    public function update(Request $request, AnioLectivo $anio)
     {
         //
+        $input = $request->all();
+
+        $validator = Validator::make($input, [
+            'estado' => 'required',
+            'nombre' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->sendError('Validation Error.', $validator->errors());
+        }
+
+        $anio->estado = $input['estado'];
+        $anio->nombre = $input['nombre'];
+        $anio->save();
+
+        return $this->sendResponse(new AnioLectivoResource($anio), 'Anio updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\AnioLectivo  $anioLectivo
+     * @param  \App\Models\AnioLectivo  $anio
      * @return \Illuminate\Http\Response
      */
-    public function destroy(AnioLectivo $anioLectivo)
+    public function destroy(AnioLectivo $anio)
     {
         //
+        $anio->delete();
+
+        return $this->sendResponse([], 'Anio deleted successfully.');
     }
 }

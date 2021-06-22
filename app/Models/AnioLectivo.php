@@ -12,5 +12,11 @@ class AnioLectivo extends Model
     protected $fillable = [
         'inicio', 'fin ', 'estado', 'nombre'
     ];
+
   protected $table='aniolectivo';
+
+ // public $timestamps = false;
+
+
 }
+

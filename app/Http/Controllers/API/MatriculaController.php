@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Asignatura;
+use App\Models\Matricula;
 use Illuminate\Http\Request;
 use App\Http\Controllers\API\BaseController as BaseController;
-use App\Http\Resources\Asignatura as AsignaturaResource;
+use App\Http\Resources\Matricula as MatriculaResource;
 use Validator;
 
 
-class AsignaturaController extends BaseController
+
+class MatriculaController extends BaseController
 {
     /**
      * Display a listing of the resource.
@@ -19,9 +20,9 @@ class AsignaturaController extends BaseController
     public function index()
     {
         //
-        $asignaturas = Asignatura::all();
+        $matriculas = Matricula::all();
 
-        return $this->sendResponse(AsignaturaResource::collection($asignaturas), 'Asignaturas retrieved successfully.');
+        return $this->sendResponse(MatriculaResource::collection($matriculas), 'matriculas retrieved successfully.');
     }
 
     /**
@@ -32,7 +33,6 @@ class AsignaturaController extends BaseController
     public function create()
     {
         //
-
     }
 
     /**
@@ -47,44 +47,44 @@ class AsignaturaController extends BaseController
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'name' => 'required',
-            'detail' => 'required'
+            'state' => 'required',
+            'inscription' => 'required'
         ]);
 
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $asignatura = Asignatura::create($input);
+        $matricula = Matricula::create($input);
 
-        return $this->sendResponse(new AsignaturaResource($asignatura), 'Asignatura created successfully.');
+        return $this->sendResponse(new MatriculaResource($matricula), 'matricula created successfully.');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Asignatura  $asignatura
+     * @param  \App\Models\Matricula  $matricula
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
         //
-        $asignatura = Asignatura::find($id);
+        $matricula = Matricula::find($id);
 
-        if (is_null($asignatura)) {
+        if (is_null($matricula)) {
             return $this->sendError('Product not found.');
         }
 
-        return $this->sendResponse(new AsignaturaResource($asignatura), 'Asignatura retrieved successfully.');
+        return $this->sendResponse(new MatriculaResource($matricula), 'matricula retrieved successfully.');
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Asignatura  $asignatura
+     * @param  \App\Models\Matricula  $matricula
      * @return \Illuminate\Http\Response
      */
-    public function edit(Asignatura $asignatura)
+    public function edit(Matricula $matricula)
     {
         //
     }
@@ -93,41 +93,41 @@ class AsignaturaController extends BaseController
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Asignatura  $asignatura
+     * @param  \App\Models\Matricula  $matricula
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Asignatura $asignatura)
+    public function update(Request $request, Matricula $matricula)
     {
         //
         $input = $request->all();
 
         $validator = Validator::make($input, [
-            'titulo' => 'required',
-            'rasgo' => 'required'
+            'state' => 'required',
+            'inscription' => 'required'
         ]);
 
         if($validator->fails()){
             return $this->sendError('Validation Error.', $validator->errors());
         }
 
-        $asignatura->name = $input['titulo'];
-        $asignatura->detail = $input['rasgo'];
-        $asignatura->save();
+        $matricula->state = $input['state'];
+        $matricula->inscription = $input['inscription'];
+        $matricula->save();
 
-        return $this->sendResponse(new AsignaturaResource($asignatura), 'Asignatura updated successfully.');
+        return $this->sendResponse(new MatriculaResource($matricula), 'matricula updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Asignatura  $asignatura
+     * @param  \App\Models\Matricula  $matricula
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Asignatura $asignatura)
+    public function destroy(Matricula $matricula)
     {
         //
-        $asignatura->delete();
+        $matricula->delete();
 
-        return $this->sendResponse([], 'Asignatura deleted successfully.');
+        return $this->sendResponse([], 'matricula deleted successfully.');
     }
 }

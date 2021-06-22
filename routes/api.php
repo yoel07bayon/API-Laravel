@@ -5,9 +5,10 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\RegisterController;
 use App\Http\Controllers\API\ProductController;
-use App\Http\Controllers\API\AsignaturaController;
 use App\Http\Controllers\API\CursoController;
 use App\Http\Controllers\API\AnioLectivoController;
+use App\Http\Controllers\API\MatriculaController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -25,9 +26,9 @@ Route::post('login', [RegisterController::class, 'login']);
 
 Route::middleware('auth:api')->group( function () {
     Route::resource('products', ProductController::class);
-    Route::resource('asignaturas', AsignaturaController::class);
     Route::resource('cursos', CursoController::class);
     Route::resource('periodos', AnioLectivoController::class);
+    Route::resource('matriculas', MatriculaController::class);
 
 
 });
