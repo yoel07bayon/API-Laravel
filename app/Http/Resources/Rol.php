@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class Matricula extends JsonResource
+class Rol extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,11 @@ class Matricula extends JsonResource
     {
         return [
             'id' => $this->id,
-            'state' => $this->state,
-            'inscription' => $this->inscription,
+            'description' => $this->description,
+            'estado' => $this->estado,
             'created_at' => $this->created_at->format('d/m/Y'),
             'updated_at' => $this->updated_at->format('d/m/Y'),
+
         ];
     }
 }
